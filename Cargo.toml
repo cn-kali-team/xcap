@@ -12,9 +12,10 @@ keywords = ["screen", "monitor", "window", "capture", "image"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
-default = ["default-image"]
+default = ["default-image", "wayland"]
 vendored = ["dbus/vendored"]
 default-image = ["image/default"]
+wayland = ["dbus", "percent-encoding"]
 [dependencies]
 image = { version = "0.25", default-features = false, features = ["png"] }
 log = "0.4"
@@ -42,9 +43,9 @@ windows = { version = "0.58", features = [
 ] }
 
 [target.'cfg(target_os="linux")'.dependencies]
-percent-encoding = "2.3"
+percent-encoding = { version = "2.3", optional = true }
 xcb = { version = "1.5", features = ["randr"] }
-dbus = { version = "0.9" }
+dbus = { version = "0.9", optional = true }
 
 [dev-dependencies]
 fs_extra = "1.3"
