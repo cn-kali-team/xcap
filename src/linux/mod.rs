@@ -1,5 +1,6 @@
 mod capture;
 mod utils;
+#[cfg(feature = "wayland")]
 mod wayland_capture;
 mod xorg_capture;
 

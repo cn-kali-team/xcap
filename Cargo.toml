@@ -13,7 +13,7 @@ keywords = ["screen", "monitor", "window", "capture", "image"]
 
 [features]
 vendored = ["dbus/vendored"]
-
+wayland = ["dbus", "percent-encoding"]
 [dependencies]
 image = "0.25"
 log = "0.4"
@@ -41,9 +41,9 @@ windows = { version = "0.58", features = [
 ] }
 
 [target.'cfg(target_os="linux")'.dependencies]
-percent-encoding = "2.3"
+percent-encoding = { version = "2.3", optional = true }
 xcb = { version = "1.5", features = ["randr"] }
-dbus = { version = "0.9" }
+dbus = { version = "0.9", optional = true }
 
 [dev-dependencies]
 fs_extra = "1.3"

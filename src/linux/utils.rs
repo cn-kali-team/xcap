@@ -1,5 +1,6 @@
+#[cfg(feature = "wayland")]
 use image::{open, RgbaImage};
-
+#[cfg(feature = "wayland")]
 use crate::error::XCapResult;
 
 pub(super) struct Rect {
@@ -34,7 +35,7 @@ impl Rect {
         width * height
     }
 }
-
+#[cfg(feature = "wayland")]
 pub(super) fn png_to_rgba_image(
     filename: &String,
     x: i32,

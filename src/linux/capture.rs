@@ -4,9 +4,11 @@ use std::env::var_os;
 use crate::error::XCapResult;
 
 use super::{
-    impl_monitor::ImplMonitor, impl_window::ImplWindow, wayland_capture::wayland_capture,
+    impl_monitor::ImplMonitor, impl_window::ImplWindow,
     xorg_capture::xorg_capture,
 };
+#[cfg(feature = "wayland")]
+use super::wayland_capture::wayland_capture;
 
 fn wayland_detect() -> bool {
     let xdg_session_type = var_os("XDG_SESSION_TYPE")
@@ -24,7 +26,12 @@ fn wayland_detect() -> bool {
 
 pub fn capture_monitor(impl_monitor: &ImplMonitor) -> XCapResult<RgbaImage> {
     if wayland_detect() {
+      #[cfg(feature = "wayland")]
+      {
         wayland_capture(impl_monitor)
+      }
+      #[cfg(not(feature = "wayland"))]
+      Err(crate::XCapError::new("Either feature \"wayland\" must be enabled for this crate."))
     } else {
         let x = ((impl_monitor.x as f32) * impl_monitor.scale_factor) as i32;
         let y = ((impl_monitor.y as f32) * impl_monitor.scale_factor) as i32;

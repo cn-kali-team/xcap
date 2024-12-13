@@ -21,7 +21,7 @@ pub enum XCapError {
     #[cfg(target_os = "linux")]
     #[error(transparent)]
     StdStrUtf8Error(#[from] std::str::Utf8Error),
-    #[cfg(target_os = "linux")]
+    #[cfg(all(target_os = "linux", feature = "wayland"))]
     #[error(transparent)]
     DbusError(#[from] dbus::Error),
     #[cfg(target_os = "linux")]
